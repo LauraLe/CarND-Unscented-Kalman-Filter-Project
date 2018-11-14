@@ -15,4 +15,33 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   TODO:
     * Calculate the RMSE here.
   */
+    VectorXd rmse(4);
+    rmse << 0,0,0,0;
+    
+    if(estimations.size() == 0){
+        cout << "ERROR CalculateRMSE() - The estimation vector is empty" << endl;
+        return rmse;
+    }
+    
+    if(ground_truth.size() == 0){
+        cout << "ERROR CalculateRMSE() - The ground-truth vector is empty" << endl;
+        return rmse;
+    }
+    
+    unsigned int estimate_sz = estimations.size();
+    if(estimate_sz != ground_truth.size()){
+        cout << "ERROR CalculateRMSE() - The ground-truth and estimation vectors does not have the same size." << endl;
+        return rmse;
+    }
+    
+    for(unsigned int i=0; i < estimations.size(); ++i){
+        
+        VectorXd diff = estimations[i] - ground_truth[i];
+        diff = diff.array()*diff.array();
+        rmse += diff;
+    }
+    
+    rmse = rmse / estimate_sz;
+    rmse = rmse.array().sqrt();
+    return rmse;
 }

@@ -39,6 +39,14 @@ OUTPUT: values provided by the c++ program to the simulator
 ["rmse_vy"]
 
 ---
+## RESULT
+* I am able to achieve rubic requirement : px, py, vx, vy output coordinates must have an RMSE <= [.09, .10, .40, .30] when using the file: "obj_pose-laser-radar-synthetic-input.txt", which is the same data file the simulator uses for Dataset 1
+* RMSE of Data Set 1
+![Simulator with dataset 1](images/Data1.png)
+
+* RMSE of Data Set 2
+![Simulator with dataset 1](images/Data2.png)
+---
 
 ## Other Important Dependencies
 * cmake >= 3.5

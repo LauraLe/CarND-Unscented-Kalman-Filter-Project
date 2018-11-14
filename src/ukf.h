@@ -11,6 +11,29 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 class UKF {
+private:
+    /*****************************************************************************
+     *  Generate Sigma Points
+     *  @param x : State vector.
+     *  @param P : Covariance matrix.
+     *  @param lambda: Sigma points spreading parameter.
+     *  @param n_sig: Sigma points dimension.
+     ****************************************************************************/
+    MatrixXd GenerateSigmaPoints(VectorXd x, MatrixXd P, double lambda, int n_sig);
+    
+    /*****************************************************************************
+     *  Predict Sigma Points
+     *  @param Xsig : Sigma Point matrix.
+     *  @param delta_t : Time elapse from last measurement.
+     *  @param n_x: State dimension.
+     *  @param n_sig: Sigma points dimension.
+     *  @param nu_am: Process noise std of longitudinal acceleration in m/s^2 
+     *  @param nu_yawdd: Process noise std of yaw acceleration in rad/s^2
+     ****************************************************************************/
+    MatrixXd PredictSigmaPoints(MatrixXd Xsig, double delta_t, int n_x, int n_sig, double nu_am, double nu_yawdd);
+    
+    VectorXd NormalizeAngle(VectorXd vector, int angleIdx);
+    
 public:
 
   ///* initially set to false, set to true in first call of ProcessMeasurement
@@ -67,7 +90,21 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  ///* Sigma dimension
+    int n_sig_;
+    
+  ///* The current NIS for radar
+    double NIS_radar_;
+    
+  ///* The current NIS for lidar
+    double NIS_lidar_;
 
+   //* Measure noise covariance matrix of radar
+    MatrixXd R_radar_;
+    
+    //* Measure noise covariance matrix of lidar
+    MatrixXd R_lidar_;
+    
   /**
    * Constructor
    */
